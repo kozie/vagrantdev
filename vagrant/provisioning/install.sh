@@ -35,6 +35,7 @@ sudo apt-get update
 
 # Install apache and PHP7
 sudo apt-get install -y apache2 php7.0-fpm
+sudo apt-get install -y php7.0-dom php7.0-gd php7.0-mcrypt php7.0-curl php7.0-intl php7.0-mbstring php7.0-zip
 
 # Enable http2 and other apache modules
 sudo a2enmod proxy_fcgi proxy proxy_http http2 ssl expires headers rewrite
