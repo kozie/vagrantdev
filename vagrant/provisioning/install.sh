@@ -4,10 +4,11 @@ set -e
 
 truncate -s 0 /var/mail/app
 
-user="app"
-homedir=$(getent passwd $user | cut -d ':' -f6)
+# Set PHP version used
+# TODO use version check to switch between 5.x and 7.0
 phpversion="$1"
 
+# Set SSL information (self-signed)
 SSL_DIR="/etc/ssl"
 DOMAIN="*.dev.cream.nl"
 PASSPHRASE=""
@@ -35,7 +36,7 @@ sudo apt-get update
 # Install apache and PHP7
 sudo apt-get install -y apache2 php7.0-fpm
 
-# Enable http2 and other cool and superfast stuff
+# Enable http2 and other apache modules
 sudo a2enmod proxy_fcgi proxy proxy_http http2 ssl expires headers rewrite
 
 # Set up PHP fpm stuff
@@ -47,7 +48,7 @@ sudo openssl genrsa -out "$SSL_DIR/dev.cream.nl.key" 2048
 sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/dev.cream.nl.key" -out "$SSL_DIR/dev.cream.nl.csr" -passin pass:$PASSPHRASE
 sudo openssl x509 -req -days 365 -in "$SSL_DIR/dev.cream.nl.csr" -signkey "$SSL_DIR/dev.cream.nl.key" -out "$SSL_DIR/dev.cream.nl.crt"
 
-# TODO Edit virtualhost
+# Edit virtualhost
 cat > /etc/apache2/sites-enabled/000-default.conf << EOF
 <VirtualHost *:80>
 	DocumentRoot /var/www/html
@@ -101,7 +102,7 @@ sudo service php7.0-fpm restart
 # Install Composer
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Node JS
+# Install Node JS & update NPM
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g npm@latest
