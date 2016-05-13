@@ -65,7 +65,7 @@ cat > /etc/apache2/sites-enabled/000-default.conf << EOF
 	</Directory>
 
 	# php handler
-	ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/$1
+	ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/\$1
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -88,7 +88,7 @@ cat > /etc/apache2/sites-enabled/000-default.conf << EOF
 	</Directory>
 
 	# php handler
-	ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/$1
+	ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/\$1
 
 	# Enable http2
 	Protocols h2 http/1.1
