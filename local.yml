@@ -1,0 +1,8 @@
+fs:
+  type: nfs
+  folders:
+    webroot:
+      host: .
+      guest: /var/www/html
+php:
+  version: 7
