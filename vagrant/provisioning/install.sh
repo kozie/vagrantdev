@@ -39,7 +39,7 @@ sudo apt-get install -y apache2 php7.0-fpm
 sudo a2enmod proxy_fcgi proxy proxy_http http2 ssl expires headers rewrite
 
 # Set up PHP fpm stuff
-sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php7.0/fpm/pool.d/www.conf
+sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
 
 # Create self signed cert
 sudo mkdir -p "$SSL_DIR"
@@ -97,6 +97,14 @@ EOF
 # Restart & go
 sudo service apache2 restart
 sudo service php7.0-fpm restart
+
+# Install Composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Node JS
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g npm@latest
 
 echo "==============================="
 echo "Done installing dev environment"
