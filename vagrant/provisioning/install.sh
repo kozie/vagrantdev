@@ -100,6 +100,11 @@ EOF
 sudo service apache2 restart
 sudo service php7.0-fpm restart
 
+# Install postfix (mail)
+sudo debconf-set-selections <<< "postfix postfix/mailname string dev.cream.nl"
+sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+sudo apt-get install -y postfix
+
 # Install Composer
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
