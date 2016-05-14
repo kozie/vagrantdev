@@ -83,7 +83,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		override.vm.network "private_network", type: "dhcp"
 		override.vm.network "forwarded_port", guest: 80, host: 80, auto_correct: true
 		override.vm.network "forwarded_port", guest: 3306, host: 3306, auto_correct: true
-		vbox_memory = 2048
+		box.memory = 2048
 	end
 
 	config.vm.provider :lxc do |lxc, override|
